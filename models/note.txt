@@ -1,0 +1,4 @@
+Mongoose Models will eventually replace
+the data in this folder.
+Or if SQL is used will keep these for
+seeding data after declaring schema
