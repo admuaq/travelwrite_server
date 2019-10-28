@@ -1,5 +1,5 @@
 const axios = require('axios')
-const Post = require('../controllers/postController') // controller
+const Post = require('../controllers/post_controller') // controller
 
 const route = 'http://localhost:8626/posts'
 

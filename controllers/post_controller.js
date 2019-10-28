@@ -3,6 +3,10 @@ const dummyData = require('../test/dummyData')
 
 const Post = {
   createPost (title, content) {
+    if (title.length <= 0) {
+      throw new Error('Title needs to be at least one character in length')
+    }
+
     const newPost = new PostObject(title, content)
     dummyData.push(newPost)
     return newPost
@@ -12,7 +16,12 @@ const Post = {
     return post
   },
   updatePost (id, title, content) {
+    if (title.length <= 0) throw new Error('Title needs to be at least one character in length')
+
     const post = dummyData.find(element => element.id === parseInt(id))
+
+    if (!post) throw new Error('Post not found')
+
     post.title = title
     post.content = content
 
@@ -20,6 +29,9 @@ const Post = {
   },
   deletePost (id) {
     const post = Post.findPost(id)
+
+    if (!post) throw new Error('Post not found')
+
     const index = dummyData.indexOf(post)
     dummyData.splice(index, 1)
     return post
