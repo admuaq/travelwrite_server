@@ -1,5 +1,6 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
-const databaseName = 'playground'
+const database = process.env.MONGO_URL
 const Post = require('../controllers/post_controller')
 // const Post = require('../models/Post')
 
@@ -7,7 +8,7 @@ describe('Post Controller Tests', () => {
   const nonExistentId = 200
 
   beforeAll(async () => {
-    await mongoose.connect(`mongodb://localhost/${databaseName}`, { useNewUrlParser: true, useUnifiedTopology: true })
+    await mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
   })
 
   afterAll(async (done) => {

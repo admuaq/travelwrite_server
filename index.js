@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const app = express()
 
-const port = 8626
+const port = process.env.PORT
+const dUrl = process.env.MONGO_URL
 
 app.use(express.json())
 app.use(morgan('tiny'))
@@ -17,7 +18,7 @@ app.use('/posts', postRoute)
 app.use('/api', apiRoute)
 app.use('/login', loginRoute)
 
-mongoose.connect('mongodb://localhost/playground', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection
 
