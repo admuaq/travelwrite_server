@@ -1,26 +1,26 @@
-const PostObject = require('../test/class/postClass') // Class
-const dummyData = require('../test/dummyData')
+const Post = require('../models/Post') // Class
 
-const Post = {
+const PostController = {
   createPost (title, content) {
-    if (title.length <= 0) {
+    if (title.length === 0) {
       throw new Error('Title needs to be at least one character in length')
     }
 
-    const newPost = new PostObject(title, content)
-    dummyData.push(newPost)
+    const newPost = new Post({ title, content })
+    newPost.save()
     return newPost
   },
   findPost (id) {
-    const post = dummyData.find(element => element.id === parseInt(id))
+    const post = Post.findById(id)
+    console.log(id)
     return post
   },
   updatePost (id, title, content) {
     if (title.length <= 0) throw new Error('Title needs to be at least one character in length')
 
-    const post = dummyData.find(element => element.id === parseInt(id))
+    const post = Post.findById(id)
 
-    if (!post) throw new Error('Post not found')
+    if (post.id !== id) throw new Error('Post not found')
 
     post.title = title
     post.content = content
@@ -28,17 +28,15 @@ const Post = {
     return post
   },
   deletePost (id) {
-    const post = Post.findPost(id)
+    const post = Post.findById(id)
 
-    if (!post) throw new Error('Post not found')
+    if (post.id !== id) throw new Error('Post not found')
 
-    const index = dummyData.indexOf(post)
-    dummyData.splice(index, 1)
     return post
   },
   all () {
-    return dummyData
+    return Post.find()
   }
 }
 
-module.exports = Post
+module.exports = PostController

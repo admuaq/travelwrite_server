@@ -1,19 +1,7 @@
-const mongoose = require('mongoose')
-const databaseName = 'playground'
 const Post = require('../controllers/post_controller')
-// const Post = require('../models/Post')
 
 describe('Post Controller Tests', () => {
   const nonExistentId = 200
-
-  beforeAll(async () => {
-    await mongoose.connect(`mongodb://localhost/${databaseName}`, { useNewUrlParser: true, useUnifiedTopology: true })
-  })
-
-  afterAll(async (done) => {
-    await mongoose.disconnect()
-    done()
-  })
 
   describe('createPost', () => {
     function throwErrorNoTitleCreate () {
@@ -42,7 +30,7 @@ describe('Post Controller Tests', () => {
       expect(throwErrorNoTitleUpdate).toThrow('Title needs to be at least one character in length')
     })
 
-    it('should throw error if no post is found with message "Post not found" ', () => {
+    it('should throw error if no post is found with message "" ', () => {
       expect(() => Post.updatePost(nonExistentId, 'a', 'asdsd')).toThrow('Post not found')
     })
   })
