@@ -15,12 +15,13 @@ async function seedPosts () {
     new Post({ title: 'test4', content: 'qwe', user_id: foundAdmin.id })
   ]
 
-  await postsData.forEach(post => {
+  // console.log(foundAdmin)
+
+  await postsData.map(post => {
     post.save().catch(err => err)
   })
   console.log('Finished seeding Posts')
 }
-
 // Setting is created alongside User
 async function seedUsers () {
   console.log('Seeding Users')
@@ -44,7 +45,6 @@ async function seedUsers () {
   })
   console.log('Finished seeding Users')
 }
-
 function closeConnection () {
   mongoose.connection.close(() => {
     console.log('Finished Seeding and closing connection')
@@ -63,7 +63,6 @@ db.once('open', async () => {
   console.log('Connected to MongoDB and ready to seed')
   await seedUsers()
   await seedPosts()
-  closeConnection()
 })
 // .then(() => {
 //   mongoose.disconnect(() => {
