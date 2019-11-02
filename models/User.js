@@ -1,10 +1,14 @@
-class User {
-  constructor (name, email, password, settings) {
-    this.name = name.toLowerCase()
-    this.email = email
-    this._password = password
-    this._settings = settings
-  }
-}
+const mongoose = require('mongoose')
+mongoose.set('useCreateIndex', true)
 
-module.exports = User
+const userSchema = new mongoose.Schema({
+  name: { type: String },
+  surname: { type: String },
+  email: { type: String },
+  admin: { type: Boolean, default: false },
+  superAdmin: { type: Boolean, unique: true },
+  pass_hash: { type: String, required: true },
+  date_created: { type: Date, default: Date.now }
+})
+
+module.exports = mongoose.model('User', userSchema)
