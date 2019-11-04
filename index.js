@@ -2,11 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
+const helmet = require('helmet')
 const app = express()
 
 const port = process.env.PORT
 const dUrl = process.env.MONGO_URL
 
+app.use(helmet())
 app.use(express.json())
 app.use(morgan('tiny'))
 
