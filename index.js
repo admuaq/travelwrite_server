@@ -12,12 +12,12 @@ app.use(helmet())
 app.use(express.json())
 app.use(morgan('tiny'))
 
-const apiRoute = require('./routes/api')
 const loginRoute = require('./routes/login')
 const postRoute = require('./routes/posts')
+const usersRoute = require('./routes/users')
 
-app.use('/posts', postRoute)
-app.use('/api', apiRoute)
+app.use('api/posts', postRoute)
+app.use('api/users', usersRoute)
 app.use('/login', loginRoute)
 
 mongoose.connect(dUrl, { useNewUrlParser: true, useUnifiedTopology: true })
