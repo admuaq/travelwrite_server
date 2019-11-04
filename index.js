@@ -16,8 +16,8 @@ const loginRoute = require('./routes/login')
 const postRoute = require('./routes/posts')
 const usersRoute = require('./routes/users')
 
-app.use('api/posts', postRoute)
-app.use('api/users', usersRoute)
+app.use('/api/posts', postRoute)
+app.use('/api/users', usersRoute)
 app.use('/login', loginRoute)
 
 mongoose.connect(dUrl, { useNewUrlParser: true, useUnifiedTopology: true })
