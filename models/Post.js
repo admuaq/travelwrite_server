@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Joi = require('@hapi/joi')
+
 mongoose.set('useCreateIndex', true)
 
 const postSchema = new mongoose.Schema({
@@ -12,4 +14,13 @@ const postSchema = new mongoose.Schema({
   date_created: { type: Date, default: Date.now }
 })
 
+function validatePost (post) {
+  const schema = Joi.object({
+    title: Joi.string().min(1).max(25).required(),
+    content: Joi.string().max(600)
+  })
+  return schema.validate(post)
+}
+
 module.exports = mongoose.model('Post', postSchema)
+exports.validate = validatePost
