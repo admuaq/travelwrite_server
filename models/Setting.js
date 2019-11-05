@@ -22,5 +22,5 @@ function validateSetting (setting) {
   return schema.validate(setting)
 }
 
-module.exports = mongoose.model('Setting', settingSchema)
+exports.Setting = mongoose.model('Setting', settingSchema)
 exports.validate = validateSetting

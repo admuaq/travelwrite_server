@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Joi = require('@hapi/joi')
+const jwt = require('jsonwebtoken')
 
 mongoose.set('useCreateIndex', true)
 
@@ -12,6 +13,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 5, maxlength: 1024 },
   date_created: { type: Date, default: Date.now }
 })
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ _id: this._id, admin: this.admin }, process.env.PK)
+  return token
+}
 
 function validateUser (user) {
   const schema = Joi.object({

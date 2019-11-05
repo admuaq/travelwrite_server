@@ -1,19 +1,35 @@
+const auth = require('../middleware/auth')
 const router = require('express').Router()
-const Post = require('../controllers/post_controller') // controller
+const { Post, validate } = require('../models/post') // Model
 
 // CREATE
-router.post('', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   console.log('CREATE POST:')
-  const { title, content } = req.body
-  console.log('before:', (await Post.all()).length)
-  const newPost = Post.createPost(title, content)
-  console.log('after:', (await Post.all()).length)
-  console.log('after:', (await Post.all()))
+
+  console.log('before:', (await Post.find()).length)
+
+  const { error } = validate(req.body)
+
+  if (error) return res.status(404).send(error.details[0].message)
+
+  let { title, content, user_id } = req.body
+
+  if (!user_id) {
+    user_id = req.user._id
+  }
+
+  const newPost = new Post({ title, content, user_id })
+  try {
+    await newPost.save()
+  } catch (ex) {
+    return res.status(404).send(ex.message)
+  }
+
   res.json(newPost)
 })
 
 // Index
-router.get('', async (req, res) => {
+router.get('/', async (req, res) => {
   console.log('GET POST (all):')
   res.json(await Post.all())
 })

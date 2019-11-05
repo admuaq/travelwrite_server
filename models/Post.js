@@ -22,5 +22,5 @@ function validatePost (post) {
   return schema.validate(post)
 }
 
-module.exports = mongoose.model('Post', postSchema)
+exports.Post = mongoose.model('Post', postSchema)
 exports.validate = validatePost
