@@ -1,7 +1,8 @@
+const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const { User, validate } = require('../models/User')
-const Setting = require('../models/Setting')
+const { Setting } = require('../models/Setting')
 
 // Create new User
 router.post('/', async (req, res) => {
@@ -22,6 +23,8 @@ router.post('/', async (req, res) => {
   const salt = await bcrypt.genSalt(13)
   user.password = await bcrypt.hash(password, salt)
 
+  const token = user.generateAuthToken()
+
   try {
     // Attempt to save user
     const savedUser = await user.save()
@@ -31,15 +34,14 @@ router.post('/', async (req, res) => {
     console.log(savedSetting)
 
     // Send newly created user data to client
-    return res.json(
-      {
+    return res.header('x-auth-token', token)
+      .json({
         _id: savedUser._id,
         name: savedUser.name,
         surname: savedUser.surname,
         username: savedUser.username,
         email: savedUser.email
-      }
-    )
+      })
   } catch (ex) {
     console.log(ex)
     return res.sendStatus(400).send(ex.errmsg)
