@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const { User, validate } = require('../models/User')
-const Setting = require('../models/Setting')
+const { Setting } = require('../models/Setting')
 
 // Create new User
 router.post('/', async (req, res) => {
