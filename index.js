@@ -1,4 +1,5 @@
 require('dotenv').config()
+const error = require('./middleware/error')
 const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
@@ -19,6 +20,8 @@ const usersRoute = require('./routes/users')
 app.use('/api/posts', postRoute)
 app.use('/api/users', usersRoute)
 app.use('/api/auth', authRoute)
+
+app.use(error)
 
 mongoose.connect(dUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
