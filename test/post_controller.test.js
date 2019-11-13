@@ -4,7 +4,7 @@ const database = process.env.MONGO_URL
 const Post = require('../controllers/post_controller')
 // const Post = require('../models/Post')
 
-describe('Post Controller Tests', () => {
+xdescribe('Post Controller Tests', () => {
   const nonExistentId = 200
 
   beforeAll(async () => {

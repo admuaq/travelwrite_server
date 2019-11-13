@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "jest",
+    "test": "jest --verbose",
     "seed": "node ./config/seed.js"
+  },
+  "standard": {
+    "ignore": [
+      "test/**"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^16.1.7",
+    "@types/jest": "^24.0.22",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "dotenv": "^8.2.0",

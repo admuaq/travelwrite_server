@@ -7,7 +7,7 @@ const helmet = require('helmet')
 const app = express()
 
 const port = process.env.PORT
-const dUrl = process.env.MONGO_URL
+const dUrl = process.env.NODE_ENV === 'testing' ? process.env.TESTDB_URL : process.env.MONGO_URL
 
 app.use(helmet())
 app.use(express.json())
@@ -33,5 +33,8 @@ db.on('error', (err) => {
 
 db.once('open', () => {
   console.log('Connected to MongoDB')
-  app.listen(port, () => console.log(`Listening on port ${port}...`))
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}...`)
+    if (process.env.NODE_ENV === 'testing') console.log('Running in development mode...')
+  })
 })

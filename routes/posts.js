@@ -5,6 +5,8 @@ const router = require('express').Router()
 const { Post, validate } = require('../models/post') // Model
 
 // CREATE
+
+// move concerns to controller
 router.post('/', auth, async (req, res) => {
   console.log('CREATE POST:')
 
@@ -27,7 +29,7 @@ router.post('/', auth, async (req, res) => {
     return res.status(404).send(ex.message)
   }
 
-  res.json(newPost)
+  res.json({ _id: newPost._id, name: newPost.name, surname: newPost.surname, username: newPost.username, email: newPost.email })
 })
 
 // Index
